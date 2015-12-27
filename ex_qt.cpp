@@ -62,6 +62,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     ButtonWindow* bw=new ButtonWindow();
     bw->show();
+    bw->start_loop();
     app.exec();
 
     return 42;

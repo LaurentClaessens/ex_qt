@@ -11,9 +11,11 @@ class ButtonWindow : public QMainWindow
     signals:
         void need_button();
     private slots:
-        void start_loop();
         void do_bing();
         void create_button();
+        void create_i_button();
+    public slots:
+        void start_loop();
     private:
         QVBoxLayout* v_layout;
     public:
