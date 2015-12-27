@@ -184,8 +184,6 @@ mocables: compiler_moc_header_make_all compiler_moc_source_make_all
 compiler_moc_header_make_all: moc_ex_qt.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_ex_qt.cpp
-moc_ex_qt.cpp: ex_qt.h
-	/usr/lib/i386-linux-gnu/qt4/bin/moc $(DEFINES) $(INCPATH) ex_qt.h -o moc_ex_qt.cpp
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
@@ -207,8 +205,10 @@ compiler_clean: compiler_moc_header_clean
 ####### Compile
 
 
-chose: moc_ex_qt.cpp 
+moc_ex_qt.cpp: ex_qt.h
+	/usr/lib/i386-linux-gnu/qt4/bin/moc $(DEFINES) $(INCPATH) ex_qt.h -o moc_ex_qt.cpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_ex_qt.o moc_ex_qt.cpp
+chose: moc_ex_qt.cpp ex_qt.cpp ex_qt.h
 	$(CXX)  $(CXXFLAGS) $(INCPATH) -o ex_qt   moc_ex_qt.o  $(LIBS)  ex_qt.cpp  
 
 ####### Install

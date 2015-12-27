@@ -7,7 +7,13 @@
 
 #include "ex_qt.h"
 
-void ButtonWindow::start_loop()
+LoopWidget::LoopWidget(ButtonWindow* bw): QWidget() 
+{
+    button_widget=bw;
+    connect( this,SIGNAL(need_button()),bw,SLOT(create_button())  );
+}
+
+void LoopWidget::make_loop()
 {
     for (int i=0;i<10;i++)
     {
@@ -35,7 +41,6 @@ void ButtonWindow::create_i_button()
     button->show();
 }
 
-
 void ButtonWindow::do_bing() { std::cout<<"BING"<<std::endl; }
 
 ButtonWindow::ButtonWindow():
@@ -44,14 +49,13 @@ ButtonWindow::ButtonWindow():
     QWidget* button_widget = new QWidget(this);
     v_layout=new QVBoxLayout();
 
-    QPushButton* button= new QPushButton("click here to begin");
+    QPushButton* button= new QPushButton("Useless button");
     QPushButton* button2= new QPushButton("make bing");
     v_layout->addWidget(button);
     v_layout->addWidget(button2);
 
     button_widget->setLayout(v_layout);
 
-    connect( button,SIGNAL( clicked()  ),this, SLOT(start_loop()) );
     connect( button2,SIGNAL( clicked()  ),this, SLOT(do_bing()) );
     connect( this,SIGNAL( need_button()  ),this, SLOT(create_button()) );
     setCentralWidget(button_widget);
@@ -61,8 +65,9 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     ButtonWindow* bw=new ButtonWindow();
+    LoopWidget* loop_widget=new LoopWidget(bw);
     bw->show();
-    bw->start_loop();
+    loop_widget->make_loop();
     app.exec();
 
     return 42;
