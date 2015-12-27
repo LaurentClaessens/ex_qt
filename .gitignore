@@ -1,0 +1,8 @@
+.*.swp
+*~
+core
+*.o
+ex_qt
+.kk.log
+*.pro
+moc_*.cpp

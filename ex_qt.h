@@ -1,6 +1,9 @@
 #include<QHBoxLayout>
 #include<QMainWindow>
 
+// compilation with
+// make chose
+
 class ButtonWindow : public QMainWindow
 {
     Q_OBJECT;

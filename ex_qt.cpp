@@ -12,7 +12,7 @@ void ButtonWindow::start_loop()
     for (int i=0;i<10;i++)
     {
         std::chrono::milliseconds timespan(500);
-        std::this_thread::sleep_for(timespan);
+        std::this_thread::sleep_for(timespan);  // simulating some hard work.
         emit need_button();
         qApp->processEvents();
     }
