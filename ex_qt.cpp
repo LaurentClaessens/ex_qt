@@ -20,7 +20,6 @@ void LoopWidget::make_loop()
         std::chrono::milliseconds timespan(500);
         std::this_thread::sleep_for(timespan);  // simulating some hard work.
         emit need_button();
-        qApp->processEvents();
     }
 }
 
@@ -30,6 +29,7 @@ void ButtonWindow::create_button()
     QPushButton* button= new QPushButton("auto");
     connect( button,SIGNAL( clicked()  ),this, SLOT(create_i_button()) );
     v_layout->addWidget(button);
+    qApp->processEvents();
 }
 
 void ButtonWindow::create_i_button()
@@ -39,6 +39,17 @@ void ButtonWindow::create_i_button()
     button->setVisible(true);
     v_layout->addWidget(button);
     button->show();
+}
+
+void ButtonWindow::addButton()
+{
+    std::cout<<"Creating a button with no slot/signal"<<std::endl;
+    QPushButton* button= new QPushButton("no slot");
+    connect( button,SIGNAL( clicked()  ),this, SLOT(create_i_button()) );
+    button->setVisible(true);
+    v_layout->addWidget(button);
+    button->show();
+    qApp->processEvents();
 }
 
 void ButtonWindow::do_bing() { std::cout<<"BING"<<std::endl; }
@@ -61,13 +72,26 @@ ButtonWindow::ButtonWindow():
     setCentralWidget(button_widget);
 }
 
+void populate_buttons(ButtonWindow* bw)
+{
+    for (int i=0;i<10;i++)
+    {
+        std::chrono::milliseconds timespan(500);
+        std::this_thread::sleep_for(timespan);  // simulating some hard work.
+        bw->addButton();
+    }
+}
+
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     ButtonWindow* bw=new ButtonWindow();
     LoopWidget* loop_widget=new LoopWidget(bw);
     bw->show();
-    loop_widget->make_loop();
+
+    //loop_widget->make_loop();
+    populate_buttons(bw);
+
     app.exec();
 
     return 42;

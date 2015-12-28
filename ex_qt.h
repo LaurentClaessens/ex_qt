@@ -16,6 +16,7 @@ class ButtonWindow : public QMainWindow
         QVBoxLayout* v_layout;
     public:
         ButtonWindow();
+        void addButton();
 };
 
 class LoopWidget : public QWidget
@@ -30,3 +31,6 @@ class LoopWidget : public QWidget
         void make_loop();
         LoopWidget(ButtonWindow*);
 };
+
+void populate_buttons(ButtonWindow*);   // add buttons to the button window 
+                                        // with no use of slots/signal.
